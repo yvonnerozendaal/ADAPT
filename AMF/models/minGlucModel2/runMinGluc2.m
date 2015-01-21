@@ -11,10 +11,11 @@ initiateExperiment(model, data);
 
 %% config
 
-model.options.optimset.Display = 'off';
-model.options.useMex = 1;
 model.options.numIter = 500;
 model.options.numTimeSteps = 100;
+
+model.options.optimset.Display = 'off';
+model.options.useMex = 1;
 model.options.SSTime = 30;
 model.options.lab1 = .1;
 model.options.randPars = 0;
@@ -25,9 +26,10 @@ compileAll(model);
 
 %% run
 
-% model.functions.reg = @minGlucReg;
-
 result = runADAPT(model);
+
+
+%check whether AUC satisfies carbohydrate dose
 
 %% plot
 close all
