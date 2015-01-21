@@ -27,6 +27,7 @@ model.result.time = t;
 result = model.result;
 
 tic
+utils.parfor_progress(numIter);
 parfor it = 1:numIter
     model2 = model; % parfor fix
     elt = 0;
@@ -47,14 +48,17 @@ parfor it = 1:numIter
             
             success = 1;
         catch err
-            %
+            disp(err.message);
+            utils.parfor_progress2;
         end
     end
+    utils.parfor_progress;
 
-    fprintf('Computed trajectory %d [%d] - %.2fs\n', it, max(model2.result.sse), elt);
+%     fprintf('Computed trajectory %d [%d] - %.2fs\n', it, max(model2.result.sse), elt);
     
     result(it) = model2.result;
 end
+parfor_progress(0);
 toc
 
 result = AMF.ModelResult(model, result);
